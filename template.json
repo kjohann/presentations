@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "storageaccountname": {
+        "type": "string"
+      },
+      "storageaccountkey": {
+        "type": "securestring"
+      }
+    },
+    "resources":[{
+      "name": "slides",
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2017-08-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "containers": [{
+          "name": "slides",
+          "properties": {
+            "image": "danidemi/docker-reveal.js:latest",
+            "resources": {
+              "requests": {
+                "cpu": 1,
+                "memoryInGb": 1
+              }
+            },
+            "ports": [{
+              "port": 8000
+            }],
+            "volumeMounts": [{
+              "name": "myvolume",
+              "mountPath": "/slides"
+            }]
+          }
+        }],
+        "osType": "Linux",
+        "ipAddress": {
+          "type": "Public",
+          "ports": [{
+            "protocol": "tcp",
+            "port": "8000"
+          }]
+        },
+        "volumes": [{
+          "name": "myvolume",
+          "azureFile": {
+            "shareName": "slideslocation",
+            "storageAccountName": "[parameters('storageaccountname')]",
+            "storageAccountKey": "[parameters('storageaccountkey')]"
+          }
+        }]
+      }
+    }]
+  }
