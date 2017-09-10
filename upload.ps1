@@ -1,14 +1,15 @@
 param(
     [Parameter(Mandatory=$true)]
     [string]$deck,
-    [string]$fileShareName ='slideslocation'
+    [string]$fileShareName ='slideslocation',
+    [switch]$openBrowser
 )
 $ErrorActionPreference = "Stop"
 Remove-Module './psModules/shared.psm1' -ErrorAction SilentlyContinue
 Import-Module './psModules/shared.psm1'
 
 $path = Get-DeckPath -deck $deck
-EnsureDeckkFolder -path $path
+EnsureDeck -path $path
 
 try {
     $resourceGroupName = "$($deck)RG"
@@ -21,6 +22,13 @@ try {
     
     az storage file upload-batch --account-name $storageAccountName --account-key $storageKey --source $path --destination $fileShareName
     ExitIfCliError
+
+    $url = Get-ContainerUri -resourceGroupName $resourceGroupName -containerName 'slides'
+    if ($openBrowser) {
+        Start-Process -FilePath $url
+    } else {
+        "Upload complete. Navigate to $url to see slides."
+    }
 }
 catch {
     Write-Error "Something failed :("

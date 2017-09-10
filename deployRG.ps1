@@ -11,7 +11,7 @@ Import-Module './psModules/shared.psm1'
 
 try {
     $path = Get-DeckPath -deck $deck    
-    EnsureDeckkFolder -path $path
+    EnsureDeck -path $path
 
     $guid = [System.Guid]::NewGuid().ToString().SubString(0,7)
     $storageAccountName = "slides$guid"
@@ -49,9 +49,7 @@ try {
     Write-Verbose "Uploading slides..."
     .\upload.ps1 -deck $deck -fileShareName $fileShareName
 
-    $ipAdress = Get-ContainerIp -resourceGroupName $resourceGroupName -containerName 'slides'
-    $port = Get-ContainerPort -resourceGroupName $resourceGroupName -containerName 'slides'
-    $url = "http://$($ipAdress):$port"
+    $url = Get-ContainerUri -resourceGroupName $resourceGroupName -containerName 'slides'
     "Container can be reached from $url"
 
     Start-Process -FilePath $url

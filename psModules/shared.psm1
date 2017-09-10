@@ -47,6 +47,17 @@ function Get-ContainerPort(
     $port
 }
 
+function Get-ContainerUri(
+    [Parameter(Mandatory = $true)]
+    [string]$resourceGroupName,
+    [Parameter(Mandatory = $true)]
+    [string]$containerName
+) {
+    $ipAdress = Get-ContainerIp -resourceGroupName $resourceGroupName -containerName $containerName
+    $port = Get-ContainerPort -resourceGroupName $resourceGroupName -containerName $containerName
+    "http://$($ipAdress):$port"
+}
+
 function Get-DeckPath(
     [Parameter(Mandatory = $true)]
     [string]$deck
@@ -54,7 +65,7 @@ function Get-DeckPath(
     Join-Path $PSScriptRoot "../decks/$deck"    
 }
 
-function EnsureDeckkFolder(
+function EnsureDeck(
     [Parameter(Mandatory = $true)]
     [string]$path
 ) {
