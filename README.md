@@ -21,3 +21,8 @@ To delete resource group
 ```powershell
 deleteRG.ps1 -deck my-awesome-presentation
 ```
+
+Run locally (requires [Docker](https://www.docker.com/))
+```powershell
+runLocal.ps1 -deck my-awesome-presentation -openBrowser
+```
