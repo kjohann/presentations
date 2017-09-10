@@ -1,3 +1,5 @@
+This repo contains tools for creating presentations as well as my own presentations created using these tools.
+
 # Create slideshows, run in the cloud
 
 Easily create slides using [reveal.js](https://github.com/hakimel/reveal.js/) and run your presentation in the cloud using [Azure Container Instances](https://docs.microsoft.com/en-us/azure/container-instances/)
