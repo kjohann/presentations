@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal-demo</title>
+    <title>Azure Container Instances</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/theme/white.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,80 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>Slide 1</section>
-        <section>Slide 2</section>
+        <section>
+          <h1 style="font-size: 4rem; text-transform: none">Azure Container Instances</h1>
+          <img src="images/acilogo.svg" width="350" />
+          <p>Kristian Johannessen</p>
+          <p>Lyntalekveld om DevOps og Sky</p>
+        </section>
+
+        <section>
+          <h2 style="text-transform: none">Disposisjon</h2>
+          <ul>
+            <li>Containere i Azure</li>
+            <ul>
+              <li>ACR</li>
+              <li>ASC</li>
+              <li>Web Apps for Linux</li>
+              <li>Service Fabric</li>
+            </ul>
+            <li>ACI</li>
+            <ul>
+              <li>Hva det er</li>
+              <li>Hvordan det funker</li>
+              <li>Vise: enkelt eksempel, multi container group, samt mounted file share</li>
+            </ul>
+            <li>Orchestration</li>
+            <ul>
+              <li>Enkle funksjoner i ACI</li>
+              <li>Connectors</li>
+            </ul>
+            <li>Demo (video?)</li>
+            <ul>
+              <li>Ha en Cluster kjørende i ACS</li>
+              <li>Bruke connector til å deploye eksempel fra https://github.com/Azure/aci-connector-k8s</li>
+            </ul>
+          </ul>
+        </section>
+        <!-- <section>
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <div style="position: relative;" id="image-container">
+            <div style="position: absolute;">
+              <img src="images/logosAll.png" style="border: none; box-shadow: none;" width="450" />              
+            </div>
+            <div style="position: absolute;">
+              <img class="fragment" data-fragment-index="2" src="images/logosAllAcrFocus.png" style="border: none; box-shadow: none;" width="450" />
+              
+            </div>
+          </div>
+        </section> -->
+        <section data-transition="slide-in none-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAll.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section data-transition="none-in none-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAllAcrFocus.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section data-transition="none-in none-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAllAcsFocus.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section data-transition="none-in none-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAllSfFocus.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section data-transition="none-in none-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAllVmFocus.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section data-transition="none-in slide-out">
+          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
+          <img src="images/logosAllWebAppFocus.png" style="border: none; box-shadow: none;" width="450" />  
+        </section>
+        <section>
+          <h1 style="font-size: 4rem; text-transform: none">Azure Container Instances</h1>
+        </section>
       </div>
     </div>
 
