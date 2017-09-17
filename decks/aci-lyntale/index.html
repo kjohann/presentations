@@ -26,7 +26,7 @@
       <div class="slides">
         <section>
           <h1 style="font-size: 4rem; text-transform: none">Azure Container Instances</h1>
-          <img src="images/acilogo.svg" width="350" />
+          <img src="images/acilogo.svg" width="350" style="border: none; box-shadow: none;" />
           <p>Kristian Johannessen</p>
           <p>Lyntalekveld om DevOps og Sky</p>
         </section>
@@ -59,18 +59,6 @@
             </ul>
           </ul>
         </section>
-        <!-- <section>
-          <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
-          <div style="position: relative;" id="image-container">
-            <div style="position: absolute;">
-              <img src="images/logosAll.png" style="border: none; box-shadow: none;" width="450" />              
-            </div>
-            <div style="position: absolute;">
-              <img class="fragment" data-fragment-index="2" src="images/logosAllAcrFocus.png" style="border: none; box-shadow: none;" width="450" />
-              
-            </div>
-          </div>
-        </section> -->
         <section data-transition="slide-in none-out">
           <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
           <img src="images/logosAll.png" style="border: none; box-shadow: none;" width="450" />  
@@ -97,6 +85,69 @@
         </section>
         <section>
           <h1 style="font-size: 4rem; text-transform: none">Azure Container Instances</h1>
+          <div style="width: 60%;position: absolute;left: 0;margin-top: 1rem;" class="fragment">
+            <p style="text-align: left;">Serverless <span class="fragment">?</span></p>
+            <ul class="fragment" style="list-style: none; margin-left: 0; position: relative; width: 100%;">
+              <li>
+                <span class="fragment" style="color: green; display: inline-block; width: 10%;">✓</span>
+                <span>Ingen infrastruktur</span>
+              </li>
+              <li>
+                <span class="fragment" style="color: orange; display: inline-block; width: 10%;">–</span>
+                <span>Ingen skalering</span>
+              </li>
+              <li>
+                <span class="fragment" style="color: orange; display: inline-block; width: 10%;">–</span>
+                <span>Betaler for bruk</span>
+              </li>
+              <li>
+                <span class="fragment" style="color: red; display: inline-block; width: 10%;">✗</span>
+                <span>Eventbasert</span>
+              </li>
+            </ul>
+          </div>
+          <div style="width: 35%; position: absolute; right: 0; margin: 0; margin-right: 10%; ">
+            <img src="images/acilogo.svg" style="border: none; box-shadow: none;" />              
+          </div>
+          <aside class="notes">
+            <p>
+              Azure Container Instances er en tjeneste som lar deg kjøre containere, uten å tenke på VM'er, Web apps eller 
+              andre plattformer som Service Fabric. Alt du trenger er et image. Så kan du velge hvor mye cpu og minne du skal ha, uavhengig = digg. Det er støtte for både Linux og Windows, og du betaler kun for det du bruker.
+            </p>
+            <p>(ny slide)
+              Du får en container group. En group kan ha en public ip men kun en, men man kan tilgjengeliggjøre flere porter. Det er dog ikke støtte for portmapping. Lar deg provisjonere flere containere sammen i en gruppe som deler hostmaskin og nettverk. En container group er sammenlignbar med en pod i kubernetes. Betyr at du i teorien kan deploye en hel applikasjon bestående av flere mikrotjenester i en enkelt container group hvor du selv kan definere hvor mye ressurser hver enkelt container skal ha.
+            </p>
+            <p> (ny slide)
+              Hvis man trenger persistent storage, kan man mounte et filvolum i Azure File Share. Da kan man f.eks kjøre en slidene sine i en docker container i skyen på en public ip.
+            </p>
+            <p>
+              I en større mikrotjeneste arkitektur vil man som regel bruke en eller annen form for orkestrering som f.eks Kubernetes eller Docker Swarm. Istedenfor å lage en egen orkestrator for ACI har man lagt til rette for at eksisterende løsninger skal kunne utnytte elastiteten som ACI tilbyr gjennom såkalte connectors. Og istedenfor å forsøke å forklare hvordan det funker, tenkte jeg å prøve å vise.
+            </p>
+            <p>
+              DEMO
+              1. Vise klusteret i ASC
+              2. Vise connectoren. Forklare at den egentlig bare er et docker image som kjører i klusteret. Denne lar Kubernetes se ACI som en node - en node som potensielt har uendelige ressurser.
+              3. Provisjonere nginx i klusteret på ACI.
+            </p>
+            <p>
+              Dette er en mulig fremtid for mikrotjenestearkitekturer. En fast, tradisjonell kluster med støtte fra ACI for å ta av for peak-traffik. Man kan også kun kjøre master-noden på en VM og så ha hele applikasjonen i ACI. En ting å tenke på da er at det er betydelig dyrere å kjøre webapplikasjoner i ACI kontra f.eks ACS (figur). Du kan kjøre flere containere på en enkelt VM, mens i ACI betaler du pr. container, pr. gigabyte minne pr. cpu pr sekund.
+              ACI gir også andre muligheter. Det er for eksempel et alternativ til FaaS hvor man kan bruke automotion til å kjøre opp en container som kjører et workload og så tar man ned containeren igjen etterpå. Den store fordelen med dette er at man ikke er begrenset av hvilke språk som er støttet i FaaS-platformen. I tillegg har du full kontroll over ressursene jobben din vil bruke, og du kan kjøre jobber som tar lang tid - makstid i både Lamda og Azure Functions er 5 minutter.
+              På prosjektet jeg sitter, ser vi for oss at vi kommer til å bytte ut byggagentene våre med containere i ACI. Fordi containerne starter såpass kjapt, vil vi kunne ta de opp og ned ved behov, noe som vil kutte kostnadene dramatisk.
+            </p>
+            <p>
+              ACI er i public preview i dag, og mye av økosystemet rundt er foreløpig veldig eksperimentelt. Men det er ingen tvil om at det er en spennende tjeneste som har kommet for å bli. Og tilsvarende tjenester kommer garantert til en skytilbyder nær deg rimelig snart.
+            </p>
+            <p>https://thenewstack.io/azure-container-instances-proof-microsoft-innovating-containers/</p>
+            <ul>
+              <li>(Public preview)</li>
+              <li>Serverløse containere (?)</li>
+              <li>Provisjonere containere i Azure uten VM'er eller en høynivåtjeneste som Web Apps</li>
+              <li>Kan velge cpu og minne</li>
+              <li>Linux og Windows containere</li>
+              <li>(Rask oppstart)</li>
+              <li>(File share mounting)</li>
+            </ul>
+          </aside>
         </section>
       </div>
     </div>
