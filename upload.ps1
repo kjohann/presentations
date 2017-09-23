@@ -13,9 +13,8 @@ EnsureDeck -path $path
 
 try {
     $resourceGroupName = "$($deck)RG"
-    $storageAccountName = az storage account list --resource-group $resourceGroupName --query "[*].name" -o tsv
+    $storageAccountName = az storage account list --resource-group aci-lyntaleRG --query "[*].name" -o tsv | Where-Object {$_ -like 'slides*'}
     ExitIfCliError
-
     $storageKey = Get-StorageKey -resourceGroupName $resourceGroupName -storageAccountName $storageAccountName
     
     "Uploading  $path to $fileShareName"
