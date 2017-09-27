@@ -26,3 +26,8 @@ Run locally (requires [Docker](https://www.docker.com/))
 ```powershell
 runLocal.ps1 -deck my-awesome-presentation -openBrowser
 ```
+OR (without Powershell)
+
+```
+docker run -d -v "<paht-to-deck>:/slides/" -p 8000:8000 "danidemi/docker-reveal.js:latest"
+```
