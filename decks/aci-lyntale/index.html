@@ -28,16 +28,18 @@
           <h1 style="font-size: 4rem; text-transform: none">Azure Container Instances</h1>
           <img src="images/acilogo.svg" width="350" style="border: none; box-shadow: none;" />
           <p>Kristian Johannessen</p>
-          <p>Lyntalekveld om DevOps og Sky</p>
+          <p>Frokostmøte Serverless vs Containers</p>
           <aside class="notes">
-            <p>Hei jeg heter/jobber .. og skal snakke om en helt ny måte å kjøre containere på i Azure</p>
+            <p>Hei jeg heter/jobber .. og skal snakke om fremtidens måte å kjøre containere på i Azure</p>
           </aside>
         </section>
         <section data-transition="slide-in none-out">
           <h1 style="font-size: 4rem; text-transform: none">Containere i Azure</h1>
           <img src="images/logosAll.png" style="border: none; box-shadow: none;" width="450" /> 
           <aside class="notes">
+            <p>Microsoft har tung satsning på containers</p>
             <p>Flere container-tjenester i Azure allerede.</p>
+            <p>Nyeste tilskudd</p>
           </aside> 
         </section>
         <section>
@@ -59,7 +61,7 @@
               <li>Bare deploy et image - enkelt og greit</li>
               <li>Kan styre cpu og minne (uavhengig - yay!)</li>
               <li>Betaler kun for bruk</li>
-              <li>mao</li>
+              <li>mao skjæringspunktet mellom serverless og containers</li>
             </ul>
           </aside>
         </section>
@@ -75,7 +77,7 @@
             az container list -g lyntale
           </aside>
           </section>
-          <section data-background-video="https://lyntaledemos.blob.core.windows.net/video/Demo1.mp4"></section>          
+          <section data-background-video="https://slides42dcf1d.blob.core.windows.net/public/Lyntale%20demo%201.mp4"></section>          
         </section>
         <section>
           <h1 style="font-size: 4rem; text-transform: none">Container group</h1>
@@ -134,7 +136,7 @@
             <ul style="margin-left: 0; position: relative; width: 100%;">
                 <li class="fragment">Håndterer enkeltcontainere</li>
                 <li class="fragment">Tradisjonelle orkestreringsløsninger på toppen</li>
-                <li class="fragment">Kubernetes: https://github.com/Azure/aci-connector-k8s</li>
+                <li class="fragment">virtual-kubelet: https://github.com/virtual-kubelet/virtual-kubelet</li>
               </ul>
           
             <aside class="notes">
@@ -142,63 +144,75 @@
                 <li>I mikrotjenestearkitektur bruker man som regel orkestrering</li>
                 <li>Ingen egen skreddersydd orkestrator for ACI</li>
                 <li>ACI har minimale orkestreringsegenskaper for å håndtere enkeltcontainere</li>
-                <li>Skal kunne bruke eksisterende gjennom connectors</li>
-                <li>Betyr at man kan legge til ACI som en "uendelig" node i f.eks en kubernetes cluster</li>
-                <li>Vise hvordan det funker (håper jeg)</li>
+                <li>Skal kunne bruke eksisterende tjenester som Kubernetes på toppen</li>
               </ul>
-              <p>
-                <!--Demo - forberedelse:
-                  Backup: C:\Users\Kristian Johannessen\Videos\Captures
-                Ha en cluster oppe å gå. kjør:
-                1. az acs create --orchestrator-type kubernetes --name mycluster --generate-ssh-keys --agent-count 1 --resource-group lyntale
-                2. Vent...  
-                3. az acs kubernetes get-credentials --name=mycluster --resource-group=lyntale
-                4. kubectl get nodes 
-                5. Stå i test-mappa i cloud shell!
-                -->
-                Demo:
-                <ul>
-                  <li>kubectl get nodes (vis cluster)</li>
-                  <li>head -18 aci-connector.yaml (vil ikke vise secrets)</li>
-                  <li>kubectl create -f aci-connector.yaml</li>
-                  <li>kubectl get nodes -w</li>
-                  <li>kubectl create -f nginx-pod.yaml</li>
-                  <li>kubectl get po -w -o wide</li>
-                </ul>
-
-              </p>
             </aside>
           </section>
-          <section data-background-video="https://lyntaledemos.blob.core.windows.net/video/Demo2.mp4"></section>  
-          <section data-background-video="https://lyntaledemos.blob.core.windows.net/video/Demo2-1.mp4"></section>
-          <section data-background-video="https://lyntaledemos.blob.core.windows.net/video/Demo2-2.mp4"></section>  
+          <section>
+              <h1 style="font-size: 4rem; text-transform: none; margin-bottom: 0">Orkestrering</h1>
+              <img src="images/virtual-kubelet-overview.PNG" width="650" />
+              <aside class="notes">
+                <ul>
+                  <li>Open source, skrevet i Go</li>
+                  <li>Registrerer seg som en "uendelig" node i en kubernetes kluster</li>
+                  <li>Tillater registrering av noder fra tjenester utenfor selve klusteret</li>
+                  <li>Støtte for ACI</li>
+                </ul>
+              </aside>
+          </section>
+          <section data-background-video="https://slides42dcf1d.blob.core.windows.net/public/Lyntale.mp4"></section>  
         </section>
         <section>
-            <h1 style="font-size: 4rem; text-transform: none; margin-bottom: 0">Fremtiden</h1>
-            <h1>&nbsp;</h1>
-                <div style="text-align: left; float: left; width: 50%; margin-top: 3%;">
-                  <ul style="margin-left: 0; position: relative; width: 100%;">
-                    <li class="fragment">Første av sitt slag</li>
-                    <li class="fragment">"Uendelig skalering"</li>
-                    <li class="fragment">Kontroll på kostnader</li>
-                    <li class="fragment">Scheduled tasks</li>
-                    <li class="fragment">Byggagenter</li>
-                  </ul>
-                </div>
-                <div style="float: right; text-align: right; width: 50%;">
-                  <img src="images/backtofuture.jpg" style="border: none; box-shadow: none;" />              
-                </div>    
-                <footer style="font-size: 12px; position: fixed; bottom: 0; left: 25%;">Bilde: Flickr: MsSaraKelly (http://flickr.com/photos/56639832@N03/9422243113)</footer>
-            <aside class="notes">
-              <ul>
-                <li>Første av sitt slag: Kommer garantert tilsvarende tjenester fra alle</li>
-                <li>Uendelig: Mye enklere å håndtere variabel last</li>
-                <li>Trenger ikke "jern" for mye last, samt avansert skalering av cluster - bare dytt det i ACI</li>
-                <li>Full kontroll på kost (betal pr. sekund) - men kan fort bli dyrt - mye dyrere pr. container</li>
-                <li>Kan deploye containere som kjører et script. Fordel over FaaS: Bring your own environment + kjør så lange tasks du vil</li>
-                <li>Vi ser for oss å kjøre byggagenter på ACI. Ypperlig for byggagenter pga kort oppstartstid</li>
-              </ul>
-            </aside>
+          <section>
+              <h1 style="font-size: 4rem; text-transform: none; margin-bottom: 0">Fremtiden</h1>
+              <h1>&nbsp;</h1>
+                  <div style="text-align: left; float: left; width: 50%; margin-top: 3%;">
+                    <ul style="margin-left: 0; position: relative; width: 100%;">
+                      <li style="text-decoration: line-through" class="fragment">Første av sitt slag</li>
+                    </ul>
+                  </div>
+                  <div style="float: right; text-align: right; width: 50%;">
+                    <img src="images/backtofuture.jpg" style="border: none; box-shadow: none;" />              
+                  </div>    
+                  <footer style="font-size: 12px; position: fixed; bottom: 0; left: 25%;">Bilde: Flickr: MsSaraKelly (http://flickr.com/photos/56639832@N03/9422243113)</footer>
+              <aside class="notes">
+                <ul>
+                  <li>Hold lyntalen i høst på DevOps og Sky meetup...</li>
+                  <li>Hyper har ikke samme markedsimpact som MS, AWS og GCP - ikke fått den oppmerksomheten de fortjener</li>
+                </ul>
+              </aside>
+          </section>
+          <section data-background-iframe="https://hyper.sh/">
+
+          </section>
+          <section>
+              <h1 style="font-size: 4rem; text-transform: none; margin-bottom: 0">Fremtiden</h1>
+              <h1>&nbsp;</h1>
+                  <div style="text-align: left; float: left; width: 50%; margin-top: 3%;">
+                    <ul style="margin-left: 0; position: relative; width: 100%;">
+                      <li>Første av sitt slag fra en av "de store"</li>
+                      <li class="fragment">"Uendelig skalering"</li>
+                      <li class="fragment">Kontroll på kostnader</li>
+                      <li class="fragment">Scheduled tasks</li>
+                      <li class="fragment">Mindre vendor lock-in</li>
+                    </ul>
+                  </div>
+                  <div style="float: right; text-align: right; width: 50%;">
+                    <img src="images/backtofuture.jpg" style="border: none; box-shadow: none;" />              
+                  </div>    
+                  <footer style="font-size: 12px; position: fixed; bottom: 0; left: 25%;">Bilde: Flickr: MsSaraKelly (http://flickr.com/photos/56639832@N03/9422243113)</footer>
+              <aside class="notes">
+                <ul>
+                  <li>Microsoft først ute av de store.</li>
+                  <li>AWS Fargate</li>
+                  <li>Uendelig: Mye enklere å håndtere variabel last</li>
+                  <li>Trenger ikke "jern" for mye last, samt avansert skalering av cluster - bare dytt det i ACI</li>
+                  <li>Full kontroll på kost (betal pr. sekund) - men kan fort bli dyrt - mye dyrere pr. container</li>
+                  <li>Kan deploye containere som kjører et script. Fordel over FaaS: Bring your own environment + kjør så lange tasks du vil</li>
+                  <li>Enklere å pakke sekken og flytte til noe annet. virtual-kubelet har f.eks også støtte for Hyper.sh</li>
+                </ul>
+              </aside>
+          </section>
         </section>
       </div>
     </div>
